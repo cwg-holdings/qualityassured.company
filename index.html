@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+
+    <title>QAC — Quality Assured, Co.</title>
+    <meta
+      name="description"
+      content="QAC (Quality Assured, Co.). Product-first QA — meticulous testing and automation."
+    />
+    <link rel="canonical" href="https://qualityassured.company/" />
+
+    <meta property="og:title" content="QAC — Quality Assured, Co." />
+    <meta
+      property="og:description"
+      content="QAC (Quality Assured, Co.). Product-first QA — meticulous testing and automation."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://qualityassured.company/" />
+    <meta property="og:image" content="https://qualityassured.company/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#405C58" />
+
+    <link rel="preload" as="image" href="/assets/hero-1920.webp" type="image/webp" />
+
+    <link rel="stylesheet" href="/assets/brand.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contact">Skip to contact</a>
+    <span id="top" aria-hidden="true"></span>
+
+    <main class="splash" aria-label="QAC">
+      <picture class="bg" aria-hidden="true">
+        <source
+          type="image/webp"
+          srcset="/assets/hero-960.webp 960w, /assets/hero-1920.webp 1920w, /assets/hero-3840.webp 3840w"
+          sizes="100vw"
+        />
+        <img
+          src="/assets/hero-1920.jpg"
+          width="1920"
+          height="1080"
+          alt=""
+          decoding="async"
+          fetchpriority="high"
+          loading="eager"
+        />
+      </picture>
+
+      <div class="overlay" aria-hidden="true"></div>
+
+      <nav class="top-nav" aria-label="Site">
+        <a href="#why">Why?</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div class="content">
+        <span class="monogram" aria-label="QAC">
+          <svg class="monogram-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <rect x="10" y="28" width="44" height="12" rx="4" fill="var(--color-teal-600)" />
+            <rect x="28" y="10" width="12" height="44" rx="4" fill="var(--color-gold-600)" />
+            <rect x="14" y="32" width="36" height="4" rx="2" fill="var(--color-gold-300)" opacity="0.62" />
+          </svg>
+          <span>QAC</span>
+        </span>
+
+        <h1>Quality Assured, Co.</h1>
+        <p id="tagline" class="tagline">Product-first QA · Meticulous testing &amp; automation</p>
+        <a id="contact" class="email" href="mailto:hello@qualityassured.company">hello@qualityassured.company</a>
+      </div>
+    </main>
+
+    <section id="why" class="modal" role="dialog" aria-modal="true" aria-label="Why QAC">
+      <a class="modal-backdrop" href="#top" aria-label="Close"></a>
+      <div class="modal-card">
+        <div class="modal-head">
+          <h2>Why?</h2>
+          <a class="modal-close" href="#top">Close</a>
+        </div>
+
+        <p class="modal-lede">
+          Quality is product risk. We de-risk releases and product decisions with product-first QA: rigorous
+          testing, pragmatic automation, and clear, actionable guidance.
+        </p>
+
+        <div class="modal-grid" aria-label="Principles and services">
+          <div>
+            <p class="modal-label">Non-negotiables</p>
+            <ul class="modal-list">
+              <li>Product-first QA (product intelligence, not defect hunting)</li>
+              <li>Senior-only delivery (partners stay close to execution)</li>
+              <li>High-touch, low-noise (fewer clients, deeper engagement)</li>
+              <li>Lean by design (automate when repetition is proven)</li>
+              <li>Client-facing partners (clarity, trust, communication)</li>
+            </ul>
+          </div>
+          <div>
+            <p class="modal-label">Services</p>
+            <ul class="modal-list">
+              <li>QA Diagnostic &amp; Strategy</li>
+              <li>Release Readiness &amp; Regression Ownership</li>
+              <li>Automation Architecture &amp; Implementation</li>
+              <li>Embedded QA Advisory (Fractional)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="modal" role="dialog" aria-modal="true" aria-label="About QAC">
+      <a class="modal-backdrop" href="#top" aria-label="Close"></a>
+      <div class="modal-card">
+        <div class="modal-head">
+          <h2>About</h2>
+          <a class="modal-close" href="#top">Close</a>
+        </div>
+
+        <p class="modal-lede">
+          We’re a small team of software engineers, founders, and researchers. We’ve worked at the frontier of
+          technology—building, starting, operating, and obsessing over software products that create real-world
+          value.
+        </p>
+        <p class="modal-body">
+          Over time, we became obsessed with quality: the details that determine whether software is trusted.
+          We’re a distributed team across the U.S., and we built QAC to bring that obsession to our clients
+          through high-touch, senior-only service.
+        </p>
+
+        <p class="modal-footer">
+          <a class="email" href="mailto:hello@qualityassured.company">hello@qualityassured.company</a>
+        </p>
+      </div>
+    </section>
+
+    <script>
+      (() => {
+        const taglines = [
+          "Product-first QA · Meticulous testing & automation",
+          "Release readiness, owned",
+          "Regression covered · Releases calm",
+          "Senior-led QA for modern software",
+          "Automation with intention",
+          "Quality intelligence for product decisions",
+          "High-touch QA · Low-noise delivery",
+          "Find risk early · Ship with proof",
+          "Precision testing · Practical automation",
+          "Deep attention · Real-world reliability",
+          "From QA diagnostic to durable systems",
+          "Partner-led delivery · No junior bench",
+          "Systems, not chaos · Quality that sticks",
+          "Product teams deserve better QA",
+          "Less noise · More signal",
+          "Automation architecture, done right",
+        ];
+
+        const el = document.getElementById("tagline");
+        if (!el) return;
+
+        const getIndex = (len) => {
+          if (len <= 1) return 0;
+          try {
+            const buf = new Uint32Array(1);
+            crypto.getRandomValues(buf);
+            return buf[0] % len;
+          } catch {
+            return Math.floor(Math.random() * len);
+          }
+        };
+
+        el.textContent = taglines[getIndex(taglines.length)];
+      })();
+    </script>
+  </body>
+</html>
