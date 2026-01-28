@@ -2,9 +2,7 @@
   --text: var(--color-ivory-50);
   --text-muted: rgba(250, 243, 220, 0.78);
 
-  --overlay-strong: rgba(40, 21, 10, 0.78);
-  --overlay-soft: rgba(40, 21, 10, 0.34);
-  --overlay-clear: rgba(40, 21, 10, 0.08);
+  --overlay: rgba(40, 21, 10, 0.32);
 
   --accent: var(--color-gold-300);
 }
@@ -129,7 +127,7 @@ a {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(110deg, var(--overlay-strong), var(--overlay-soft) 48%, var(--overlay-clear));
+  background: var(--overlay);
 }
 
 .content {
