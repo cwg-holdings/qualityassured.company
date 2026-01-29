@@ -1,0 +1,210 @@
+:root {
+  --page-bg:
+    radial-gradient(circle at 18% 12%, rgba(104, 138, 133, 0.22), transparent 55%),
+    radial-gradient(circle at 86% 24%, rgba(165, 114, 33, 0.16), transparent 55%),
+    radial-gradient(circle at 40% 80%, rgba(87, 119, 114, 0.18), transparent 60%),
+    var(--color-ink-900);
+}
+
+.page {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding: clamp(1.25rem, 2.8vw, 2.5rem);
+  background: var(--page-bg);
+}
+
+.page-inner {
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.page-nav a {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 0.8rem;
+  border-radius: var(--radius-3);
+  background: rgba(250, 243, 220, 0.1);
+  border: 1px solid rgba(250, 243, 220, 0.22);
+  backdrop-filter: blur(10px);
+  color: rgba(250, 243, 220, 0.9);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.page-nav a:hover {
+  background: rgba(250, 243, 220, 0.14);
+}
+
+.research-hero {
+  margin: clamp(1.6rem, 4vw, 3rem) 0 1.25rem;
+}
+
+.page h1 {
+  text-shadow: none;
+}
+
+.post-grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.post-card {
+  border-radius: var(--radius-3);
+  border: 1px solid rgba(250, 243, 220, 0.16);
+  background: rgba(40, 21, 10, 0.52);
+  box-shadow: var(--shadow-1);
+  padding: 1.1rem 1.15rem;
+}
+
+.post-card h2 {
+  margin: 0;
+  font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-size: 1.35rem;
+}
+
+.post-card h2 a {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(213, 171, 117, 0.72);
+  padding-bottom: 0.08rem;
+}
+
+.post-card h2 a:hover {
+  border-bottom-color: rgba(213, 171, 117, 1);
+}
+
+.post-meta {
+  margin: 0.55rem 0 0.9rem;
+  color: rgba(250, 243, 220, 0.72);
+  font-size: 0.92rem;
+}
+
+.post-desc {
+  margin: 0;
+  color: rgba(250, 243, 220, 0.84);
+  line-height: 1.65;
+}
+
+.page-footer {
+  margin-top: 2.6rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(250, 243, 220, 0.14);
+}
+
+.article-shell {
+  margin-top: 1.6rem;
+  border-radius: var(--radius-3);
+  border: 1px solid rgba(250, 243, 220, 0.16);
+  background: rgba(40, 21, 10, 0.6);
+  box-shadow: var(--shadow-2);
+  padding: clamp(1.1rem, 2.8vw, 2rem);
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(250, 243, 220, 0.72);
+}
+
+.article-shell h1 {
+  margin: 0.65rem 0 0.25rem;
+  font-size: clamp(1.9rem, 2.25vw + 0.95rem, 3.2rem);
+  line-height: 1.15;
+  text-shadow: none;
+}
+
+.article-content {
+  margin-top: 1.25rem;
+  max-width: 78ch;
+}
+
+.article-content h2 {
+  margin: 2.1rem 0 0.6rem;
+  font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  font-size: 1.45rem;
+}
+
+.article-content h3 {
+  margin: 1.7rem 0 0.55rem;
+  font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  font-size: 1.2rem;
+  color: rgba(250, 243, 220, 0.92);
+}
+
+.article-content p {
+  margin: 0 0 1.05rem;
+  line-height: 1.75;
+  color: rgba(250, 243, 220, 0.84);
+}
+
+.article-content a {
+  color: rgba(213, 171, 117, 0.95);
+}
+
+.article-content a:hover {
+  color: rgba(231, 208, 170, 0.95);
+}
+
+.article-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95em;
+  background: rgba(250, 243, 220, 0.08);
+  border: 1px solid rgba(250, 243, 220, 0.14);
+  border-radius: var(--radius-1);
+  padding: 0.15rem 0.4rem;
+}
+
+.article-footer {
+  margin-top: 1.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.article-footer a {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(213, 171, 117, 0.72);
+  padding-bottom: 0.12rem;
+}
+
+.article-footer a:hover {
+  border-bottom-color: rgba(213, 171, 117, 1);
+}
+
+@media (max-width: 520px) {
+  .page-nav a {
+    height: 36px;
+    padding: 0 0.7rem;
+    font-size: 0.9rem;
+  }
+}

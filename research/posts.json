@@ -1,0 +1,9 @@
+[
+  {
+    "slug": "agentic-ai-testing",
+    "title": "Automated Testing in Agentic AI: CDP, Puppeteer, Playwright, and the Assurance Gap",
+    "date": "2026-01-28",
+    "author": "Andee",
+    "description": "A cited note on browser automation layers, why CDP still matters, where standards are headed, and how to scale assurance when AI systems write more code."
+  }
+]
