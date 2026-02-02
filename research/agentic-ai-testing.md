@@ -6,9 +6,13 @@ Most teams are still shipping software to humans using screens. The code supply 
 
 For web testing, the stack that holds up is not mysterious. Chrome DevTools Protocol gives you deep control and observability, Puppeteer gives you a programmable automation substrate close to that control plane, and Playwright turns browser control into repeatable experiments with assertions and a waiting model.[1, 7, 9]
 
-This post answers three practical questions. What is CDP good for, and why does Selenium warn you about stability. What should "CDP everywhere" mean if you care about cross browser futures, and why WebDriver BiDi is the standards answer. What does it look like to test interfaces designed for humans when the users now include agents.[3, 5, 21]
+CDP is powerful, and Selenium is right to warn you about stability and version coupling.[3]
 
-## Testing is measurement, not button clicking
+If you want CDP like power across browsers, the standards answer is WebDriver BiDi.[5]
+
+If your users now include agents, the interface needs a contract that both humans and software can read.[21]
+
+## Clicks are easy, measurement is hard
 
 UI automation fails in production for boring reasons: race conditions, delayed rendering, async navigation, overlays, and the general unwillingness of reality to align with hard coded waits. Playwright's actionability checks are an explicit attempt to make "can I safely click this now" a framework concern instead of a tribal heuristic.[12]
 
@@ -18,7 +22,15 @@ When UI tests are flaky, the usual diagnosis is timing. The deeper problem is me
 
 Assertions matter as much as actions. Playwright's test assertions are built to wait and retry in web native ways, which is a practical acknowledgement that a UI is rarely in its final state at the exact instant your code would like it to be.[13]
 
-## One stack, three layers
+A tiny Playwright test can read like what you actually want, and still fail for the right reasons.[11, 13]
+
+```js
+// Click "Sign in", then wait for "Welcome".
+await page.getByRole("button", { name: "Sign in" }).click();
+await expect(page.getByRole("heading", { name: "Welcome" })).toBeVisible();
+```
+
+## Three layers, one stack
 
 Chrome DevTools Protocol is a remote debugging protocol that exposes browser internals through commands and events. It is widely used as an automation substrate because it exposes both actuation and observability from the same surface.[1]
 
@@ -32,7 +44,7 @@ Playwright sits one level up in intent. It is an end to end testing framework, a
 
 Treat these as layers, not competitors, and you churn less. CDP gives you an observability plane, Puppeteer gives you a scriptable automation substrate near the protocol, and Playwright gives you a rigorous way to describe and assert behavior.
 
-## CDP: the power and the trap
+## CDP: power with a price
 
 The power is straightforward. CDP gives you a single channel to drive the browser and to observe what happened.[1]
 
@@ -42,7 +54,7 @@ If you build your test infrastructure on CDP directly, you are choosing to own a
 
 This is why "CDP everywhere" is both a reasonable desire and a poor portability strategy. The desire is for a rich, event driven debugging and automation surface across browsers. The portability strategy is standards.[3, 5]
 
-## Standards: WebDriver and WebDriver BiDi
+## Portability has a name: WebDriver and BiDi
 
 WebDriver is defined as a remote control interface for introspection and control of user agents, with a platform and language neutral wire protocol. It exists so tooling can target browsers without bespoke vendor integration.[4]
 
@@ -52,7 +64,7 @@ The WebKit standards position issue for BiDi is a useful window into the industr
 
 The long term win is "CDP like power with standardization." BiDi is the closest thing to that trajectory today, and it is the direction we want vendors to converge on.[5, 6]
 
-## Puppeteer: an agent substrate hiding in plain sight
+## Puppeteer: the substrate agents want
 
 Puppeteer is easy to describe as browser automation, but for agentic AI the interesting part is composability. It provides a programmable surface where you can build tools that do not just click, but also observe and explain.[7]
 
@@ -60,7 +72,19 @@ Puppeteer's `CDPSession` is the explicit escape hatch. It exists so you can send
 
 This close to the protocol shape is why Puppeteer is a credible execution layer for agentic systems. Agents need deterministic actuators and rich sensors, and protocol level streams make failures diagnosable rather than mystical.[8]
 
-## Playwright: turning automation into experiments with assertions
+Here is a small example of the kind of signal you can tap when you treat the browser like a system you can observe.
+
+```js
+// Stream network responses and log failures.
+const client = await page.target().createCDPSession();
+await client.send("Network.enable");
+
+client.on("Network.responseReceived", ({ response }) => {
+  if (response.status >= 400) console.log(response.status, response.url);
+});
+```
+
+## Playwright: where intent becomes proof
 
 Playwright's core value is that it treats UI automation as experimentation. It couples actions with a waiting model, and it bundles assertions and tooling so you can express intent and validate outcomes in repeatable ways.[9, 12, 13]
 
@@ -68,17 +92,17 @@ Its locator strategy pushes you toward user facing semantics and explicit contra
 
 Playwright also keeps CDP relevant. It exposes `CDPSession` for raw protocol access, and it documents CDP connectivity on the browser type API. It also warns that CDP connections are Chromium only and significantly lower fidelity than Playwright's native protocol.[15, 16]
 
-## Chrome got this right, WebKit and Safari still feel heavier
+## Chrome got the control plane right, WebKit still feels gated
 
 CDP is a mature, publicly documented protocol surface, and it is used as the substrate for tooling and automation.[1]
 
-Safari's official automation story is WebDriver. WebKit announced WebDriver support via `safaridriver`, and Apple documents the steps to enable WebDriver on macOS and on iOS and iPadOS, including remote automation controls.[17, 18, 19]
+Safari's official automation story is WebDriver. WebKit announced WebDriver support via `safaridriver`, and Apple documents the steps to enable WebDriver on macOS and on iOS and iPadOS, including remote automation controls.[17, 18, 19, 20]
 
 Playwright supports WebKit as a browser engine, which is valuable for cross engine coverage, and it documents browser support boundaries that matter when you are reasoning about Safari in real world test matrices.[10]
 
 The gap is not about whether WebKit can render modern sites. The gap is whether the automation and observability plane feels like a first class, tool builder friendly platform. On Chromium, CDP feels like that. On Safari, the surface is real, but it can feel more constrained and more operationally gated.
 
-## Humans consume interfaces, computers produce them, AI changes the math
+## Humans consume, machines produce, AI accelerates
 
 Human beings are still the primary consumers of most interfaces. The producer of those interfaces is software, and more of that software is being generated with AI assistance.[23, 24]
 
@@ -90,7 +114,7 @@ Public statements from large companies reinforce the same trend. Yahoo Finance r
 
 If the rate of code production goes up and the assurance pipeline stays human scale, quality becomes a governance problem, not a hero problem.[29]
 
-## We should be excited, and we should be worried
+## This is exciting, and it is risky
 
 We should be excited because the execution layer is real. The guidance is explicit that you can pair a model with browser automation, and that you should sandbox it.[21]
 
@@ -98,7 +122,7 @@ We should be worried because velocity shifts risk. If a meaningful share of new 
 
 If you want an anchor for corporate decision making, use a risk framework. NIST AI RMF is one such anchor.[29]
 
-## Where AI fits as a user of UIs
+## When the user is also software
 
 AI systems are not only producers of code. They are increasingly consumers of UIs as computer using agents. OpenAI's computer use guidance explicitly recommends pairing a model with a browser automation framework such as Playwright or Selenium and emphasizes sandboxing and safety boundaries.[21]
 
@@ -106,7 +130,7 @@ OpenAI also provides a UI testing agent demo built on this pattern, which is use
 
 This raises a testing question: how do we validate interfaces designed by humans when the consumer is also a computer. The most pragmatic answer today is to treat semantic layers, especially accessibility roles and names, as the public contract that both tests and agents can target. Playwright's locator guidance and assertions are a blueprint for this approach because they push you toward human readable intent that can still be validated in machine terms.[11, 13]
 
-## Meeting AI code supply with AI testing, without lying to ourselves
+## Scaling assurance without self deception
 
 "AI testing" should not mean replacing deterministic oracles with hand waving. It should mean using models to scale the parts of testing that humans are bad at doing repeatedly, while keeping execution and pass or fail grounded in stable assertions and observable signals.[13]
 
@@ -120,7 +144,7 @@ The risk is not hypothetical. "Do Users Write More Insecure Code with AI Assista
 
 The right posture is controlled optimism. Use the productivity upside, but assume the defect surface expands unless you scale assurance with equal seriousness.
 
-## What this means in production
+## What to do on Monday
 
 If you are building software for real users, you need interfaces that are testable, diagnosable, and stable under constant change. That is already true for humans and it becomes not negotiable when agents are also users.
 

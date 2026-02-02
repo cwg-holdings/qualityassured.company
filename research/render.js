@@ -89,6 +89,20 @@
         continue;
       }
 
+      if (trimmed.startsWith("```")) {
+        flush();
+        const langRaw = trimmed.slice(3).trim().toLowerCase();
+        const lang = /^[a-z0-9]+$/.test(langRaw) ? langRaw : "";
+        const code = [];
+        for (cursor += 1; cursor < lines.length; cursor += 1) {
+          const next = String(lines[cursor] ?? "");
+          if (next.trim() === "```") break;
+          code.push(next);
+        }
+        blocks.push({ type: "code", lang, text: code.join("\n") });
+        continue;
+      }
+
       if (trimmed.startsWith("## ")) {
         flush();
         const heading = trimmed.slice(3).trim();
@@ -136,6 +150,11 @@
       .map((b) => {
         if (b.type === "h2") return `<h2>${renderInline(b.text)}</h2>`;
         if (b.type === "h3") return `<h3>${renderInline(b.text)}</h3>`;
+        if (b.type === "code") {
+          const lang = String(b.lang || "").trim();
+          const className = lang ? `hljs language-${escapeHtml(lang)}` : "hljs";
+          return `<pre><code class="${className}">${escapeHtml(String(b.text || ""))}</code></pre>`;
+        }
         if (b.type === "ref") {
           const num = escapeHtml(String(b.num));
           return `<p class="ref" id="ref-${num}"><a class="ref-anchor" href="#ref-${num}">[${num}]</a> ${renderInline(
@@ -178,6 +197,24 @@
       .catch(() => null);
   };
 
+  const ensureHighlightJs = () => {
+    if (window.hljs) return Promise.resolve();
+
+    const loadScript = (src) =>
+      new Promise((resolve, reject) => {
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) return resolve();
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = true;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("Failed to load highlight.js"));
+        document.head.appendChild(script);
+      });
+
+    return loadScript("/assets/vendor/highlightjs/highlight.pack.js").then(() => undefined);
+  };
+
   Promise.all([
     fetch(mdUrl, { cache: "no-store" }).then((res) => {
       if (!res.ok) throw new Error("Failed to load markdown");
@@ -199,6 +236,12 @@
         const date = fmtDate(String(meta?.date || ""));
         const author = meta?.author ? String(meta.author) : "";
         if (date || author) metaEl.textContent = [date, author].filter(Boolean).join(" · ");
+      }
+
+      if (contentEl.querySelector("pre code")) {
+        ensureHighlightJs()
+          .then(() => window.hljs?.highlightAll?.())
+          .catch(() => {});
       }
     })
     .catch(renderFailure);
